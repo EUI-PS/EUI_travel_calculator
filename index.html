@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NUTS 3 Travel Distance Calculator</title>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Travel Grant Calculator</title>
+
   <style>
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -16,10 +24,10 @@
     .card {
       max-width: 1100px;
       margin: 0 auto;
-      background: #fff;
+      background: #ffffff;
       border-radius: 14px;
-      padding: 24px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 28px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
@@ -30,28 +38,29 @@
     .intro {
       margin-top: 0;
       color: #555;
+      line-height: 1.5;
     }
 
     .section {
-      margin-top: 24px;
-      padding-top: 8px;
+      margin-top: 30px;
     }
 
     .section h2 {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       font-size: 20px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px 24px;
+      gap: 18px;
     }
 
     .field {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      min-width: 0;
     }
 
     label {
@@ -60,28 +69,33 @@
 
     select,
     button {
+      width: 100%;
       padding: 12px;
       font-size: 16px;
       border: 1px solid #cfcfcf;
       border-radius: 8px;
       box-sizing: border-box;
-      width: 100%;
     }
 
     select:disabled {
-      background: #f1f1f1;
+      background: #f2f2f2;
       color: #777;
     }
 
     button {
-      margin-top: 24px;
+      margin-top: 30px;
       cursor: pointer;
       font-weight: 700;
+      padding: 14px;
+    }
+
+    button:hover {
+      background: #eeeeee;
     }
 
     .result {
-      margin-top: 24px;
-      padding: 18px;
+      margin-top: 28px;
+      padding: 22px;
       background: #eef5ff;
       border-radius: 10px;
       line-height: 1.7;
@@ -93,95 +107,217 @@
       color: #8a1f1f;
     }
 
-    .section-title {
-      margin-top: 18px;
-      margin-bottom: 8px;
+    .result-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .result-section {
+      margin-top: 24px;
+    }
+
+    .grant {
+      font-size: 20px;
+      margin-top: 6px;
+    }
+
+    .per-diem {
       font-size: 18px;
-      font-weight: 700;
+      margin-top: 6px;
     }
 
-    .total {
-      font-size: 24px;
+    .amount {
       font-weight: 700;
-    }
-
-    .muted {
-      color: #666;
-      font-size: 14px;
     }
 
     @media (max-width: 900px) {
+
       .grid {
         grid-template-columns: 1fr;
       }
+
     }
+
   </style>
 </head>
+
+
 <body>
+
   <div class="card">
-    <h1>NUTS 3 Travel Distance Calculator</h1>
+
+    <h1>Travel distance calculator</h1>
+
     <p class="intro">
-      Select origin and destination NUTS 3 regions. The calculator returns the travel distance
-      and the associated travel amount for 1 participant.
+      Select the NUTS 3 region of origin and destination.
+      The calculator estimates the travel grant for one participant
+      based on the distance between the two selected NUTS 3 points.
     </p>
 
+
+    <!-- ORIGIN -->
+
     <div class="section">
+
       <h2>Origin</h2>
+
       <div class="grid">
+
         <div class="field">
-          <label for="originCountry">Country of origin</label>
+
+          <label for="originCountry">
+            Country
+          </label>
+
           <select id="originCountry">
-            <option value="">Loading countries...</option>
+
+            <option value="">
+              Loading countries...
+            </option>
+
           </select>
+
         </div>
 
-        <div class="field">
-          <label for="originNuts2">NUTS 2 of origin</label>
-          <select id="originNuts2" disabled>
-            <option value="">Select country first</option>
-          </select>
-        </div>
 
         <div class="field">
-          <label for="originNuts3">NUTS 3 of origin</label>
-          <select id="originNuts3" disabled>
-            <option value="">Select NUTS 2 first</option>
+
+          <label for="originNuts2">
+            NUTS 2
+          </label>
+
+          <select
+            id="originNuts2"
+            disabled
+          >
+
+            <option value="">
+              Select country first
+            </option>
+
           </select>
+
         </div>
+
+
+        <div class="field">
+
+          <label for="originNuts3">
+            NUTS 3
+          </label>
+
+          <select
+            id="originNuts3"
+            disabled
+          >
+
+            <option value="">
+              Select NUTS 2 first
+            </option>
+
+          </select>
+
+        </div>
+
       </div>
+
     </div>
+
+
+    <!-- DESTINATION -->
 
     <div class="section">
+
       <h2>Destination</h2>
+
       <div class="grid">
+
         <div class="field">
-          <label for="destinationCountry">Country of destination</label>
+
+          <label for="destinationCountry">
+            Country
+          </label>
+
           <select id="destinationCountry">
-            <option value="">Loading countries...</option>
+
+            <option value="">
+              Loading countries...
+            </option>
+
           </select>
+
         </div>
 
-        <div class="field">
-          <label for="destinationNuts2">NUTS 2 of destination</label>
-          <select id="destinationNuts2" disabled>
-            <option value="">Select country first</option>
-          </select>
-        </div>
 
         <div class="field">
-          <label for="destinationNuts3">NUTS 3 of destination</label>
-          <select id="destinationNuts3" disabled>
-            <option value="">Select NUTS 2 first</option>
+
+          <label for="destinationNuts2">
+            NUTS 2
+          </label>
+
+          <select
+            id="destinationNuts2"
+            disabled
+          >
+
+            <option value="">
+              Select country first
+            </option>
+
           </select>
+
         </div>
+
+
+        <div class="field">
+
+          <label for="destinationNuts3">
+            NUTS 3
+          </label>
+
+          <select
+            id="destinationNuts3"
+            disabled
+          >
+
+            <option value="">
+              Select NUTS 2 first
+            </option>
+
+          </select>
+
+        </div>
+
       </div>
+
     </div>
 
-    <button id="calculateBtn">Calculate travel distance and amount</button>
 
-    <div id="result" class="result"></div>
+    <!-- CALCULATE -->
+
+    <button
+      id="calculateBtn"
+      type="button"
+    >
+      Calculate travel distance
+    </button>
+
+
+    <!-- RESULTS -->
+
+    <div
+      id="result"
+      class="result"
+      aria-live="polite"
+    >
+    </div>
+
   </div>
 
+
   <script src="./app.js"></script>
+
 </body>
+
 </html>
