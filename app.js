@@ -745,7 +745,7 @@ function findGenericTravelBand(
    * before applying the reimbursement bands.
    *
    * Example:
-   * 473.64 km → 474 km
+   * 571.20 km → 571 km
    */
 
   const bandDistance =
@@ -816,51 +816,14 @@ function getTravelRule(
 
 
   // =====================================================
-  // CROSS-BORDER TRAVEL
+  // DOMESTIC TRAVEL BELOW 400 KM
   //
-  // ALWAYS use generic travel bands.
-  // =====================================================
-
-  if (!isDomestic) {
-    const band =
-      findGenericTravelBand(
-        distanceKm
-      );
-
-
-    if (!band) {
-      return {
-        amount: 0,
-        rule:
-          "No travel grant defined for this distance"
-      };
-    }
-
-
-    const maxLabel =
-      band.max_km === null
-        ? "+"
-        : band.max_km;
-
-
-    return {
-      amount:
-        toNumber(
-          band.amount_eur
-        ),
-
-      rule:
-        `${band.min_km}–${maxLabel} km`
-    };
-  }
-
-
-  // =====================================================
-  // DOMESTIC TRAVEL
-  // 50–399 km
+  // Use the country-specific intra-Member State rate.
   // =====================================================
 
   if (
+    isDomestic
+    &&
     roundedDistance >= 50
     &&
     roundedDistance < 400
@@ -878,31 +841,13 @@ function getTravelRule(
 
 
   // =====================================================
-  // DOMESTIC TRAVEL
-  // 400–600 km
-  // =====================================================
-
-  if (
-    roundedDistance >= 400
-    &&
-    roundedDistance <= 600
-  ) {
-    return {
-      amount:
-        toNumber(
-          country.band_400_600
-        ),
-
-      rule:
-        `${country.country}: intra-Member State travel (400–600 km)`
-    };
-  }
-
-
-  // =====================================================
-  // OTHER DISTANCES
+  // ALL TRAVEL FROM 400 KM ONWARDS
   //
-  // Use generic travel bands.
+  // Applies to:
+  // - domestic travel >= 400 km
+  // - all cross-border travel
+  //
+  // Always use the generic distance bands.
   // =====================================================
 
   const genericBand =
@@ -1088,7 +1033,7 @@ function calculateTravelGrant() {
 
       <strong>
         Estimated travel grant
-        (per participant):
+        (for one participant):
       </strong>
 
 
